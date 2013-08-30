@@ -371,6 +371,7 @@ public:
     std::vector<manipulation_msgs::PlaceLocation> locations;
     for (std::size_t i = 0; i < poses.size(); ++i)
     {
+		ROS_INFO("Default place location/pose pushed");
       manipulation_msgs::PlaceLocation location;
       location.approach.direction.vector.z = -1.0;
       location.retreat.direction.vector.x = -1.0;
@@ -446,6 +447,48 @@ public:
     }
     if (pick_action_client_->getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
     {
+		ROS_INFO_STREAM("RESULT_Grasp : " << pick_action_client_->getResult()->grasp);
+      return true;
+    }
+    else
+    {
+      ROS_WARN_STREAM("Fail: " << pick_action_client_->getState().toString() << ": " << pick_action_client_->getState().getText());
+      return false;
+    }
+  }
+  
+  bool pick_plan_only(const std::string &object, const std::vector<manipulation_msgs::Grasp> &grasps)
+  {
+    if (!pick_action_client_)
+    {
+      ROS_ERROR_STREAM("Pick action client not found");
+      return false;
+    }
+    if (!pick_action_client_->isServerConnected())
+    {
+      ROS_ERROR_STREAM("Pick action server not connected");
+      return false;
+    }
+    moveit_msgs::PickupGoal goal;
+    constructGoal(goal, object);
+    goal.possible_grasps = grasps;
+    
+    //*****IMP:-   We want to plan the whole pick motion with a different base position so planning_scene_diff is used    ****** IMP
+    
+    goal.planning_options.plan_only = true;
+    goal.planning_options.planning_scene_diff.is_diff = true;
+    goal.planning_options.planning_scene_diff.robot_state.joint_state.position[0] = 2;
+    goal.planning_options.planning_scene_diff.robot_state.joint_state.position[1] = 2;
+    goal.planning_options.planning_scene_diff.robot_state.joint_state.position[2] = 0;
+    
+    pick_action_client_->sendGoal(goal);
+    if (!pick_action_client_->waitForResult())
+    {
+      ROS_INFO_STREAM("Pickup action returned early");
+    }
+    if (pick_action_client_->getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+    {
+		ROS_INFO_STREAM("RESULT_Grasp : " << pick_action_client_->getResult()->grasp);
       return true;
     }
     else
@@ -912,6 +955,12 @@ bool MoveGroup::pick(const std::string &object, const std::vector<manipulation_m
 {
   return impl_->pick(object, grasps);
 }
+
+bool MoveGroup::pick_plan_only(const std::string &object, const std::vector<manipulation_msgs::Grasp> &grasps)
+{
+  return impl_->pick(object, grasps);
+}
+
 
 bool MoveGroup::place(const std::string &object)
 {

@@ -64,6 +64,8 @@ void move_group::MoveGroupMoveAction::executeMoveCallback(const moveit_msgs::Mov
   context_->planning_scene_monitor_->updateFrameTransforms();
 
   moveit_msgs::MoveGroupResult action_res;
+  for(int i=0;i< goal->request.goal_constraints.size();i++)
+    ROS_INFO_STREAM("goal_constraints " << i<<": " << goal->request.goal_constraints[i]);
   if (goal->planning_options.plan_only || !context_->allow_trajectory_execution_)
   {
     if (!goal->planning_options.plan_only)

@@ -71,6 +71,7 @@ bool PickPlan::plan(const planning_scene::PlanningSceneConstPtr &planning_scene,
 
   std::string planning_group = goal.group_name;
   std::string end_effector = goal.end_effector;
+  ROS_INFO("end_effector: %s", end_effector.c_str());
   if (end_effector.empty() && !planning_group.empty())
   {
     const robot_model::JointModelGroup *jmg = planning_scene->getRobotModel()->getJointModelGroup(planning_group);

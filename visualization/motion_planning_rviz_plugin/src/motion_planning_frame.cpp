@@ -204,7 +204,7 @@ void MotionPlanningFrame::changePlanningGroupHelper()
     }
     catch(std::runtime_error &ex)
     {
-      ROS_ERROR("%s", ex.what());
+      ROS_ERROR("error is:%s", ex.what());
     }
     if (move_group_)
     {

@@ -45,6 +45,7 @@
 // URDF, SRDF
 #include <urdf_model/model.h>
 #include <srdfdom/model.h>
+#include <ros/console.h>
 
 #include <moveit/rdf_loader/rdf_loader.h>
 
@@ -383,6 +384,7 @@ bool KDLKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose &ik_pose,
                                            moveit_msgs::MoveItErrorCodes &error_code,
                                            const kinematics::KinematicsQueryOptions &options) const
 {
+	ROS_INFO_STREAM("searchPositionIK 1");
   const IKCallbackFn solution_callback = 0;
   std::vector<double> consistency_limits;
 
@@ -404,6 +406,7 @@ bool KDLKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose &ik_pose,
                                            moveit_msgs::MoveItErrorCodes &error_code,
                                            const kinematics::KinematicsQueryOptions &options) const
 {
+		ROS_INFO_STREAM("searchPositionIK 2");
   const IKCallbackFn solution_callback = 0;
   return searchPositionIK(ik_pose,
                           ik_seed_state,
@@ -423,6 +426,7 @@ bool KDLKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose &ik_pose,
                                            moveit_msgs::MoveItErrorCodes &error_code,
                                            const kinematics::KinematicsQueryOptions &options) const
 {
+		ROS_INFO_STREAM("searchPositionIK 3");
   std::vector<double> consistency_limits;
   return searchPositionIK(ik_pose,
                           ik_seed_state,
@@ -443,6 +447,7 @@ bool KDLKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose &ik_pose,
                                            moveit_msgs::MoveItErrorCodes &error_code,
                                            const kinematics::KinematicsQueryOptions &options) const
 {
+		ROS_INFO_STREAM("searchPositionIK 4");
   return searchPositionIK(ik_pose,
                           ik_seed_state,
                           timeout,
@@ -462,6 +467,7 @@ bool KDLKinematicsPlugin::searchPositionIK(const geometry_msgs::Pose &ik_pose,
                                            const std::vector<double> &consistency_limits,
                                            const kinematics::KinematicsQueryOptions &options) const
 {
+		ROS_INFO_STREAM("searchPositionIK 5");
   ros::WallTime n1 = ros::WallTime::now();
   if(!active_)
   {

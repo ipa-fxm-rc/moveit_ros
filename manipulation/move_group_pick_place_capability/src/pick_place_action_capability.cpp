@@ -301,6 +301,7 @@ void move_group::MoveGroupPickPlaceAction::addGraspToPickupResult(const plan_exe
       plan.plan_components_[i].trajectory_->getLastWayPoint().getJointStateGroup(plan.plan_components_[i].trajectory_->getGroupName())->getVariableValues(action_res.grasp.grasp_posture.position);
     }
   }
+  ROS_INFO_STREAM("Grasp : " << action_res.grasp);
 }
 
 void move_group::MoveGroupPickPlaceAction::executePlaceCallback_PlanAndExecute(const moveit_msgs::PlaceGoalConstPtr& goal, moveit_msgs::PlaceResult &action_res)

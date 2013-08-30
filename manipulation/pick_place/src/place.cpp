@@ -205,7 +205,11 @@ bool PlacePlan::plan(const planning_scene::PlanningSceneConstPtr &planning_scene
     p->retreat_ = pl.retreat;
     p->retreat_posture_ = pl.post_place_posture;
     if (p->retreat_posture_.name.empty())
+    {
+		ROS_INFO_STREAM("p->retreat_posture_.name.empty()");
       p->retreat_posture_ = attached_body->getDetachPosture();
+      ROS_INFO_STREAM("p->retreat_posture_.name.empty():  " <<  p->retreat_posture_);
+    }
     pipeline_.push(p);
   }
   ROS_INFO("Added %d place locations", (int) goal.place_locations.size());

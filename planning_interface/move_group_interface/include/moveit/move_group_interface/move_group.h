@@ -352,6 +352,9 @@ public:
 
   /** \brief Pick up an object given possible grasp poses */
   bool pick(const std::string &object, const std::vector<manipulation_msgs::Grasp> &grasps);
+  
+  /** \brief Plan to Pick up an object given possible grasp poses */
+  bool pick_plan_only(const std::string &object, const std::vector<manipulation_msgs::Grasp> &grasps);
 
   /** \brief Place an object somewhere safe in the world (a safe location will be detected) */
   bool place(const std::string &object);
